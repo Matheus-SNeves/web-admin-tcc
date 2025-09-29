@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresas - Admin Speed Market</title>
+    <link rel="stylesheet" href="../styles/global.css">
+</head>
+<body>
+    <header>
+        <img src="../assets/logo.png" alt="Logo Speed Market" id="logo">
+        <h1>Painel Administrativo</h1>
+        <button id="logout-btn">Sair</button>
+    </header>
+    <main class="admin-container">
+        <aside class="sidebar">
+            <nav id="admin-nav">
+                <a href="admin.html" class="nav-item" data-page="admin">Dashboard</a>
+                <a href="pedidos.html" class="nav-item" data-page="pedidos">Pedidos</a>
+                <a href="clientes.html" class="nav-item" data-page="clientes">Clientes</a>
+                <a href="produtos.html" class="nav-item" data-page="produtos">Produtos</a>
+                <a href="empresas.html" class="nav-item" data-page="empresas">Empresas</a>
+                <a href="avaliacoes.html" class="nav-item" data-page="avaliacoes">Avaliações</a>
+            </nav>
+        </aside>
+        <section>
+            <h2>Cadastro de empresas</h2>
+            <form id="cadastro">
+                <input type="text" name="nome" placeholder="Digite o nome" required>
+                <input type="text" name="cnpj" placeholder="Digite o CNPJ" required>
+                <input type="text" name="email" placeholder="Digite a email" required>
+                <input type="text" name="img" placeholder="Coloque o link da imagem">
+                <button type="submit">Cadastrar</button>
+            </form>
+        </section>
+        <section class="content">
+            <div id="empresas" class="page">
+                <h2>Gerenciar Empresas (Supermercados)</h2>
+                <div id="empresas-content" class="table-container">
+                    <p>Carregando empresas...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="../scripts/empresas.js"></script>
+</body>
+</html>

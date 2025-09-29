@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - Admin Speed Market</title>
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+</head>
+<body>
+    <header>
+        <img src="../assets/logo.png" alt="Logo Speed Market" id="logo">
+        <h1>Painel Administrativo</h1>
+        <button id="logout-btn">Sair</button>
+    </header>
+    <main class="admin-container">
+        <aside class="sidebar">
+            <nav id="admin-nav">
+                <a href="admin.html" class="nav-item" data-page="admin">Dashboard</a>
+                <a href="pedidos.html" class="nav-item" data-page="pedidos">Pedidos</a>
+                <a href="clientes.html" class="nav-item" data-page="clientes">Clientes</a>
+                <a href="produtos.html" class="nav-item" data-page="produtos">Produtos</a>
+                <a href="empresas.html" class="nav-item" data-page="empresas">Empresas</a>
+                <a href="avaliacoes.html" class="nav-item" data-page="avaliacoes">Avaliações</a>
+            </nav>
+        </aside>
+        <section class="content">
+            <div id="pedidos" class="page">
+                <h2>Gerenciar Pedidos</h2>
+                <div id="pedidos-content" class="table-container">
+                    <p>Carregando pedidos...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="../scripts/pedidos.js"></script>
+</body>
+</html>
