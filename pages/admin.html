@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Admin Speed Market</title>
+    <link rel="stylesheet" href="../styles/global.css"> 
+</head>
+<body>
+    <header>
+        <img src="../assets/logo.png" alt="Logo Speed Market" id="logo">
+        <h1>Painel Administrativo</h1>
+        <button id="logout-btn">Sair</button> 
+    </header>
+    <main class="admin-container">
+        <aside class="sidebar">
+            <nav id="admin-nav">
+                <a href="admin.html" class="nav-item active" data-page="admin">Dashboard</a>
+                <a href="pedidos.html" class="nav-item" data-page="pedidos">Pedidos</a>
+                <a href="clientes.html" class="nav-item" data-page="clientes">Usuários (Clientes/Admin)</a>
+                <a href="produtos.html" class="nav-item" data-page="produtos">Produtos</a>
+                <a href="empresas.html" class="nav-item" data-page="empresas">Empresas/Supermercados</a>
+                <a href="avaliacoes.html" class="nav-item" data-page="avaliacoes">Avaliações</a>
+            </nav>
+        </aside>
+        <section class="content">
+            <div id="dashboard" class="page">
+                <h2>Resumo do Sistema</h2>
+                
+                <div class="summary-cards">
+                    <div class="card">
+                        <h3>Total de Pedidos</h3>
+                        <p id="total-pedidos">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Clientes Ativos</h3>
+                        <p id="clientes-ativos">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Faturamento (Mês)</h3>
+                        <p id="faturamento-mes">R$ 0,00</p>
+                    </div>
+                </div>
+
+                <h3>Acesso Rápido</h3>
+                <div class="quick-links">
+                    <a href="pedidos.html" class="quick-link">Gerenciar Pedidos</a>
+                    <a href="produtos.html" class="quick-link">Gerenciar Produtos</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="../scripts/logout.js"></script>
+    <script src="../scripts/admin.js"></script> 
+</body>
+</html>

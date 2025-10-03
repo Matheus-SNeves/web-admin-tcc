@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes - Admin Speed Market</title>
+    <title>Pagamentos - Admin Speed Market</title>
     <link rel="stylesheet" href="../styles/global.css">
 </head>
 <body>
@@ -17,30 +17,27 @@
             <nav id="admin-nav">
                 <a href="admin.html" class="nav-item" data-page="admin">Dashboard</a>
                 <a href="pedidos.html" class="nav-item" data-page="pedidos">Pedidos</a>
-                <a href="clientes.html" class="nav-item active" data-page="clientes">Clientes</a>
+                <a href="clientes.html" class="nav-item" data-page="clientes">Clientes</a>
                 <a href="produtos.html" class="nav-item" data-page="produtos">Produtos</a>
                 <a href="empresas.html" class="nav-item" data-page="empresas">Empresas</a>
                 <a href="tipoempregos.html" class="nav-item" data-page="tipoempregos">Tipos de Emprego</a>
                 <a href="avaliacoes.html" class="nav-item" data-page="avaliacoes">Avaliações</a>
-                <a href="pagamentos.html" class="nav-item" data-page="pagamentos">Pagamentos</a>
+                <a href="pagamentos.html" class="nav-item active" data-page="pagamentos">Pagamentos</a>
                 <a href="enderecos.html" class="nav-item" data-page="enderecos">Endereços</a>
             </nav>
         </aside>
         <section class="content full-width">
-            <div id="lista-clientes" class="page">
-                <h2>Gerenciar Clientes (Usuários - Role: CLIENTE)</h2>
-                <div id="clientes-content" class="table-container">
-                    <p>Carregando clientes...</p>
-                    <table id="clientes-lista">
+            <div id="lista-pagamentos" class="page">
+                <h2>Gerenciar Pagamentos (GET)</h2>
+                <div id="pagamentos-content" class="table-container">
+                    <p>Carregando pagamentos...</p>
+                    <table id="pagamentos-lista">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Telefone</th>
-                                <th>Email</th>
-                                <th>Empresa ID</th>
-                                <th>Cargo ID</th>
+                                <th>Pedido ID</th>
+                                <th>Tipo</th>
+                                <th>Data</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,7 +47,7 @@
             </div>
         </section>
     </main>
-    <script src="../scripts/clientes.js"></script>
+    <script src="../scripts/pagamentos.js"></script>
     <script src="../scripts/logout.js"></script>
 </body>
 </html>

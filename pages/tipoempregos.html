@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes - Admin Speed Market</title>
+    <title>Tipo de Emprego - Admin Speed Market</title>
     <link rel="stylesheet" href="../styles/global.css">
 </head>
 <body>
@@ -17,30 +17,39 @@
             <nav id="admin-nav">
                 <a href="admin.html" class="nav-item" data-page="admin">Dashboard</a>
                 <a href="pedidos.html" class="nav-item" data-page="pedidos">Pedidos</a>
-                <a href="clientes.html" class="nav-item active" data-page="clientes">Clientes</a>
+                <a href="clientes.html" class="nav-item" data-page="clientes">Clientes</a>
                 <a href="produtos.html" class="nav-item" data-page="produtos">Produtos</a>
                 <a href="empresas.html" class="nav-item" data-page="empresas">Empresas</a>
-                <a href="tipoempregos.html" class="nav-item" data-page="tipoempregos">Tipos de Emprego</a>
+                <a href="tipoempregos.html" class="nav-item active" data-page="tipoempregos">Tipos de Emprego</a>
                 <a href="avaliacoes.html" class="nav-item" data-page="avaliacoes">Avaliações</a>
                 <a href="pagamentos.html" class="nav-item" data-page="pagamentos">Pagamentos</a>
                 <a href="enderecos.html" class="nav-item" data-page="enderecos">Endereços</a>
             </nav>
         </aside>
-        <section class="content full-width">
-            <div id="lista-clientes" class="page">
-                <h2>Gerenciar Clientes (Usuários - Role: CLIENTE)</h2>
-                <div id="clientes-content" class="table-container">
-                    <p>Carregando clientes...</p>
-                    <table id="clientes-lista">
+        <section>
+            <h2>Cadastro de Tipos de Emprego</h2>
+            <form id="form-cadastro">
+                <input type="text" name="nome" placeholder="Nome do Cargo" required>
+                <input type="number" name="salario" placeholder="Salário (Ex: 3000.00)" step="0.01" required>
+                <input type="number" name="carga_horaria" placeholder="Carga Horária (horas)" required>
+                <input type="text" name="descricao" placeholder="Descrição do Cargo" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </section>
+        <section class="content">
+            <div id="lista-tipoempregos" class="page">
+                <h2>Gerenciar Tipos de Emprego</h2>
+                <div id="tipoempregos-content" class="table-container">
+                    <p>Carregando tipos de emprego...</p>
+                    <table id="tipoempregos-lista">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Telefone</th>
-                                <th>Email</th>
-                                <th>Empresa ID</th>
-                                <th>Cargo ID</th>
+                                <th>Salário</th>
+                                <th>Carga Horária</th>
+                                <th>Descrição</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,7 +59,7 @@
             </div>
         </section>
     </main>
-    <script src="../scripts/clientes.js"></script>
+    <script src="../scripts/tipoempregos.js"></script>
     <script src="../scripts/logout.js"></script>
 </body>
 </html>

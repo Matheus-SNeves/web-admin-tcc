@@ -1,7 +1,7 @@
 const BASE_URL = 'https://tcc-senai-tawny.vercel.app';
-const endpoint = '/produtos';
+const endpoint = '/usuarios';
 const cadastroForm = document.getElementById('cadastro');
-const contentContainer = document.getElementById('produtos-content');
+const contentContainer = document.getElementById('clientes-content');
 
 const getToken = () => localStorage.getItem('authToken');
 const getHeaders = () => ({
@@ -26,12 +26,11 @@ cadastroForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const corpo = {
         nome: cadastroForm.nome.value,
-        preco: parseFloat(cadastroForm.preco.value),
-        quantidade: parseInt(cadastroForm.quantidade.value),
-        descricao: cadastroForm.descricao.value,
-        categoria: cadastroForm.categoria.value,
-        id_supermercado: parseInt(cadastroForm.id_supermercado.value),
-        img: cadastroForm.img.value
+        cpf: cadastroForm.cpf.value,
+        telefone: cadastroForm.telefone.value,
+        email: cadastroForm.email.value,
+        senha: cadastroForm.senha.value,
+        role: cadastroForm.role.value
     };
 
     try {
@@ -42,14 +41,14 @@ cadastroForm?.addEventListener('submit', async (event) => {
         });
 
         if (response.status === 201) {
-            alert('Produto cadastrado com sucesso!');
+            alert('Usuário cadastrado com sucesso!');
             window.location.reload();
         } else {
             const errorData = await response.json();
-            alert(`Erro ao cadastrar produto: ${errorData.message}`);
+            alert(`Erro ao cadastrar usuário: ${errorData.message}`);
         }
     } catch (error) {
-        alert('Erro de rede ao cadastrar produto.');
+        alert('Erro de rede ao cadastrar usuário.');
     }
 });
 
@@ -67,10 +66,10 @@ async function fetchRecords() {
             alert('Sessão expirada. Faça login novamente.');
             window.location.href = 'login.html';
         } else {
-            contentContainer.innerHTML = '<p>Erro ao carregar produtos.</p>';
+            contentContainer.innerHTML = '<p>Erro ao carregar usuários.</p>';
         }
     } catch (error) {
-        contentContainer.innerHTML = '<p>Erro de rede ao carregar produtos.</p>';
+        contentContainer.innerHTML = '<p>Erro de rede ao carregar usuários.</p>';
     }
 }
 
@@ -78,7 +77,7 @@ function renderTable(records) {
     if (!contentContainer) return;
     
     if (records.length === 0) {
-        contentContainer.innerHTML = '<p>Nenhum produto cadastrado.</p>';
+        contentContainer.innerHTML = '<p>Nenhum usuário cadastrado.</p>';
         return;
     }
 
@@ -88,11 +87,10 @@ function renderTable(records) {
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>Preço</th>
-                    <th>Qtd</th>
-                    <th>Descrição</th>
-                    <th>Categoria</th>
-                    <th>ID Supermercado</th>
+                    <th>CPF</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Role</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -104,11 +102,10 @@ function renderTable(records) {
             <tr data-id="${record.id}">
                 <td data-label="ID:">${record.id}</td>
                 <td data-label="Nome:" contenteditable="true">${record.nome}</td>
-                <td data-label="Preço:" contenteditable="true">${record.preco}</td>
-                <td data-label="Qtd:" contenteditable="true">${record.quantidade}</td>
-                <td data-label="Descrição:" contenteditable="true">${record.descricao}</td>
-                <td data-label="Categoria:" contenteditable="true">${record.categoria}</td>
-                <td data-label="ID Supermercado:" contenteditable="true">${record.id_supermercado}</td>
+                <td data-label="CPF:" contenteditable="true">${record.cpf}</td>
+                <td data-label="Telefone:" contenteditable="true">${record.telefone}</td>
+                <td data-label="Email:" contenteditable="true">${record.email}</td>
+                <td data-label="Role:" contenteditable="true">${record.role}</td>
                 <td>
                     <button onclick="alterar(${record.id}, this)">Alterar</button>
                     <button onclick="excluir(${record.id})">Excluir</button>
@@ -128,11 +125,10 @@ window.alterar = async (id, button) => {
     const row = button.closest('tr');
     const corpo = {
         nome: row.cells[1].textContent,
-        preco: parseFloat(row.cells[2].textContent),
-        quantidade: parseInt(row.cells[3].textContent),
-        descricao: row.cells[4].textContent,
-        categoria: row.cells[5].textContent,
-        id_supermercado: parseInt(row.cells[6].textContent),
+        cpf: row.cells[2].textContent,
+        telefone: row.cells[3].textContent,
+        email: row.cells[4].textContent,
+        role: row.cells[5].textContent,
     };
 
     try {
@@ -143,19 +139,19 @@ window.alterar = async (id, button) => {
         });
 
         if (response.status === 202) {
-            alert('Produto alterado com sucesso');
-            // Opcional: window.location.reload();
+            alert('Usuário alterado com sucesso');
+            // Opcional: window.location.reload(); para garantir atualização completa
         } else {
             const errorData = await response.json();
-            alert(`Erro ao alterar produto: ${errorData.message}`);
+            alert(`Erro ao alterar usuário: ${errorData.message}`);
         }
     } catch (error) {
-        alert('Erro de rede ao alterar produto.');
+        alert('Erro de rede ao alterar usuário.');
     }
 }
 
 window.excluir = async (id) => {
-    if (!confirm(`Tem certeza que deseja excluir o produto ID: ${id}?`)) return;
+    if (!confirm(`Tem certeza que deseja excluir o usuário ID: ${id}?`)) return;
 
     try {
         const response = await fetch(`${BASE_URL}${endpoint}/${id}`, {
@@ -164,13 +160,13 @@ window.excluir = async (id) => {
         });
 
         if (response.status === 204) {
-            alert('Produto excluído com sucesso!');
+            alert('Usuário excluído com sucesso!');
             window.location.reload();
         } else {
             const errorData = await response.json();
-            alert(`Erro ao excluir produto: ${errorData.message || response.statusText}`);
+            alert(`Erro ao excluir usuário: ${errorData.message || response.statusText}`);
         }
     } catch (error) {
-        alert('Erro de rede ao excluir produto.');
+        alert('Erro de rede ao excluir usuário.');
     }
 }

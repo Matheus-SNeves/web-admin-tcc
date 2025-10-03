@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedidos - Admin Speed Market</title>
     <link rel="stylesheet" href="../styles/global.css">
-    <link rel="stylesheet" href="../styles/admin.css">
 </head>
 <body>
     <header>
@@ -17,22 +16,39 @@
         <aside class="sidebar">
             <nav id="admin-nav">
                 <a href="admin.html" class="nav-item" data-page="admin">Dashboard</a>
-                <a href="pedidos.html" class="nav-item" data-page="pedidos">Pedidos</a>
+                <a href="pedidos.html" class="nav-item active" data-page="pedidos">Pedidos</a>
                 <a href="clientes.html" class="nav-item" data-page="clientes">Clientes</a>
                 <a href="produtos.html" class="nav-item" data-page="produtos">Produtos</a>
                 <a href="empresas.html" class="nav-item" data-page="empresas">Empresas</a>
+                <a href="tipoempregos.html" class="nav-item" data-page="tipoempregos">Tipos de Emprego</a>
                 <a href="avaliacoes.html" class="nav-item" data-page="avaliacoes">Avaliações</a>
+                <a href="pagamentos.html" class="nav-item" data-page="pagamentos">Pagamentos</a>
+                <a href="enderecos.html" class="nav-item" data-page="enderecos">Endereços</a>
             </nav>
         </aside>
-        <section class="content">
-            <div id="pedidos" class="page">
-                <h2>Gerenciar Pedidos</h2>
+        <section class="content full-width">
+            <div id="lista-pedidos" class="page">
+                <h2>Gerenciar Pedidos (GET e PUT)</h2>
                 <div id="pedidos-content" class="table-container">
                     <p>Carregando pedidos...</p>
+                    <table id="pedidos-lista">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuário ID</th>
+                                <th>Data</th>
+                                <th>Valor Total</th>
+                                <th>Ações (PUT)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
                 </div>
             </div>
         </section>
     </main>
     <script src="../scripts/pedidos.js"></script>
+    <script src="../scripts/logout.js"></script>
 </body>
 </html>

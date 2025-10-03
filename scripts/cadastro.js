@@ -30,7 +30,6 @@ btnCadastrar.addEventListener('click', async (event) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            // A chave no body deve ser 'id_tipo_empregado'
             body: JSON.stringify({ nome, cpf, telefone, email, senha, id_empresa, id_tipo_empregado }) 
         });
 
