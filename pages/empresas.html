@@ -5,58 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empresas - Admin Speed Market</title>
     <link rel="stylesheet" href="../styles/global.css">
-</head>
+    </head>
 <body>
     <header>
         <img src="../assets/logo.png" alt="Logo Speed Market" id="logo">
         <h1>Painel Administrativo</h1>
         <button id="logout-btn">Sair</button>
     </header>
+    
     <main class="admin-container">
+        
         <aside class="sidebar">
             <nav id="admin-nav">
                 <a href="admin.html" class="nav-item" data-page="admin">Dashboard</a>
                 <a href="pedidos.html" class="nav-item" data-page="pedidos">Pedidos</a>
+                <a href="usuarios.html" class="nav-item" data-page="usuarios">Usuários</a>
                 <a href="clientes.html" class="nav-item" data-page="clientes">Clientes</a>
+
                 <a href="produtos.html" class="nav-item" data-page="produtos">Produtos</a>
-                <a href="empresas.html" class="nav-item" data-page="empresas">Empresas</a>
-                <a href="tipoempregos.html" class="nav-item current" data-page="tipoempregos">Tipos de Emprego</a>
-                <a href="avaliacoes.html" class="nav-item" data-page="avaliacoes">Avaliações</a>
-                <a href="pagamentos.html" class="nav-item" data-page="pagamentos">Pagamentos</a>
+                <a href="empresas.html" class="nav-item active" data-page="empresas">Empresas</a>
+                
                 <a href="enderecos.html" class="nav-item" data-page="enderecos">Endereços</a>
+                <a href="pagamentos.html" class="nav-item" data-page="pagamentos">Pagamentos</a>
+                
+                <a href="tipoempregos.html" class="nav-item" data-page="tipoempregos">Tipos de Emprego</a>
+                <a href="avaliacoes.html" class="nav-item" data-page="avaliacoes">Avaliações</a>
             </nav>
         </aside>
-        <section>
-            <h2>Cadastro de empresas</h2>
-            <form id="form-cadastro">
-                <input type="text" id="nome" name="nome" placeholder="Digite o nome" required>
-                <input type="text" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" required>
-                <input type="text" id="email" name="email" placeholder="Digite a email" required>
-                <input type="text" id="img" name="img" placeholder="Coloque o link da imagem">
-                <button type="submit" id="cadastro">Cadastrar</button>
-            </form>
-        </section>
-        <section class="content">
-            <h2>Gerenciar Empresas (Supermercados)</h2>
-            <div class="table-container">
-                <table class="empresas-tabela">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Nome</th>
-                            <th>CNPJ</th>
-                            <th>Email</th>
-                            <th>Imagem</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="empresas-lista"> 
-                        <tr>
-                            <td colspan="6">Carregando empresas...</td>
-                        </tr>
-                    </tbody>
-                </table>
+        
+        <section class="admin-content">
+            
+            <div class="card">
+                <h2>Cadastro de Empresas</h2>
+                <form id="form-cadastro">
+                    <input type="text" id="nome" name="nome" placeholder="Nome da Empresa" required>
+                    <input type="text" id="cnpj" name="cnpj" placeholder="CNPJ (99.999.999/9999-99)" required>
+                    <input type="email" id="email" name="email" placeholder="E-mail da Empresa" required>
+                    <input type="url" id="img" name="img" placeholder="Link da Imagem (URL)">
+                    <button type="submit" id="cadastro">Cadastrar</button>
+                </form>
             </div>
+
+            <div class="card">
+                <h2>Gerenciar Empresas (Supermercados)</h2>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nome</th>
+                                <th>CNPJ</th>
+                                <th>Email</th>
+                                <th>Imagem</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="empresas-lista"> 
+                            <tr>
+                                <td colspan="6">Carregando empresas...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </section>
     </main>
     <script src="../scripts/empresas.js"></script>
