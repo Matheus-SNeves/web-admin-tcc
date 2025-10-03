@@ -76,7 +76,6 @@ function renderTable(records) {
                 <td data-label="Nota:" contenteditable="true">${record.nota}</td>
                 <td data-label="Comentário:" contenteditable="true">${record.comentario}</td>
                 <td>
-                    <button onclick="alterar(${record.id}, this)">Alterar</button>
                     <button onclick="excluir(${record.id})">Excluir</button>
                 </td>
             </tr>
@@ -88,31 +87,6 @@ function renderTable(records) {
         </table>
     `;
     contentContainer.innerHTML = tableHTML;
-}
-
-window.alterar = async (id, button) => {
-    const row = button.closest('tr');
-    const corpo = {
-        nota: parseFloat(row.cells[3].textContent),
-        comentario: row.cells[4].textContent,
-    };
-
-    try {
-        const response = await fetch(`${BASE_URL}${endpoint}/${id}`, {
-            method: 'PUT',
-            headers: getHeaders(),
-            body: JSON.stringify(corpo)
-        });
-
-        if (response.status === 202) {
-            alert('Avaliação alterada com sucesso');
-        } else {
-            const errorData = await response.json();
-            alert(`Erro ao alterar avaliação: ${errorData.message}`);
-        }
-    } catch (error) {
-        alert('Erro de rede ao alterar avaliação.');
-    }
 }
 
 window.excluir = async (id) => {
