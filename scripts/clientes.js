@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const user = JSON.parse(localStorage.getItem('user'));
     
     // Redirecionamento de segurança
-    if (!token || !user) {
-        window.location.href = 'login.html';
-        return;
-    }
+    // if (!token || !user) {
+    //     window.location.href = 'login.html';
+    //     return;
+    // }
     
     // --- Elementos da UI ---
     const addressModal = document.getElementById('address-modal');
