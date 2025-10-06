@@ -74,11 +74,11 @@ async function fetchRecords() {
     }
 }
 
-function renderTable(records) { 
+function renderTable(records) {
     if (!contentContainer) return;
 
     if (records.length === 0) {
-        contentContainer.innerHTML = '<p>Nenhum produto cadastrado.</p>';
+        contentContainer.innerHTML = '<p>Nenhuma avaliação cadastrada.</p>';
         return;
     }
 
@@ -87,34 +87,36 @@ function renderTable(records) {
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nome</th>
-                    <th>Preço</th>
-                    <th>Qtd</th>
-                    <th>Descrição</th>
-                    <th>Categoria</th>
-                    <th>ID Supermercado</th>
-                    <th>Img</th>
-                    <th>Ações</th>
+                    <th>Usuário ID</th>
+                    <th>Produto ID</th>
+                    <th>Nota</th>
+                    <th>Comentário</th>
+                    <th>Img</th> <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
     `;
 
     records.forEach(record => {
+        const id = record?.id ?? '';
+        const id_usuario = record?.id_usuario ?? ''; 
+        const id_produto = record?.id_produto ?? '';
+        const nota = record?.nota ?? '';
+        const comentario = record?.comentario ?? '';
+        const img = record?.img ?? ''; // NOVO: Captura a URL da imagem
 
         tableHTML += `
-            <tr data-id="${record.id}">
-                <td data-label="ID:">${record.id}</td>
-                <td data-label="Nome:" contenteditable="true">${record.nome}</td>
-                <td data-label="Preço:" contenteditable="true">${record.preco}</td>
-                <td data-label="Qtd:" contenteditable="true">${record.quantidade}</td>
-                <td data-label="Descrição:" contenteditable="true">${record.descricao}</td>
-                <td data-label="Categoria:" contenteditable="true">${record.categoria}</td>
-                <td data-label="ID Supermercado:" contenteditable="true">${record.id_supermercado}</td>
-                <td data-label="Imagem:" contenteditable="true">${record.img}</td> 
+            <tr data-id="${id}">
+                <td data-label="ID:">${id}</td>
+                <td data-label="Usuário ID:">${id_usuario}</td>
+                <td data-label="Produto ID:">${id_produto}</td>
+                <td data-label="Nota:">${nota}</td>
+                <td data-label="Comentário:">${comentario}</td>
+                <td data-label="Img:">
+                    ${img ? `<img src="${img}" alt="Imagem" style="max-width: 50px; max-height: 50px;">` : 'N/A'}
+                </td>
                 <td>
-                    <button onclick="alterar(${record.id}, this)">Alterar</button>
-                    <button onclick="excluir(${record.id})">Excluir</button>
+                    <button onclick="excluirAvaliacao(${id})">Excluir</button>
                 </td>
             </tr>
         `;
