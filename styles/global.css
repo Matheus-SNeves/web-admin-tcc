@@ -92,18 +92,10 @@ header h1 {
 .admin-container {
     display: flex;
     min-height: calc(100vh - 60px); 
-    margin-top: 60px; 
+    /* O padding-top compensa o header, mas como o header não é fixo, podemos ajustar o fluxo */
 }
 
-/* Conteúdo principal para o admin (compensando a barra lateral fixa) */
-/* OBS: É mais robusto envolver as 'sections' em um div wrapper e aplicar o margin-left nele */
-main.admin-container > section {
-    flex-grow: 1; 
-    padding: 0 20px 20px 20px;
-    margin-left: 250px; /* IGUAL À LARGURA DO .sidebar FIXO */
-}
-
-/* Barra Lateral (Sidebar) */
+/* Barra Lateral (Sidebar) - FIXA */
 .sidebar {
     width: 250px;
     background-color: var(--card-background);
@@ -111,7 +103,7 @@ main.admin-container > section {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
     
     position: fixed; 
-    top: 60px; 
+    top: 60px; /* Começa abaixo do header */
     left: 0;
     height: calc(100% - 60px); 
     z-index: 100; 
@@ -142,15 +134,17 @@ main.admin-container > section {
 
 .nav-item.active {
     background-color: var(--secondary-color);
-    color: var(--text-dark); /* Mantido para contraste */
+    color: var(--text-dark);
     font-weight: bold;
     border-left-color: var(--primary-color);
 }
 
-/* Seções de Conteúdo Geral */
-section {
-    flex-grow: 1;
-    padding: 2rem;
+/* Conteúdo principal - COMPENSANDO O SIDEBAR FIXO */
+main.admin-container > section {
+    flex-grow: 1; 
+    padding: 2rem; /* Padding uniforme */
+    margin-left: 250px; /* ESSENCIAL: Empurra o conteúdo para a direita */
+    min-width: calc(100% - 250px); /* Garante que o conteúdo não seja espremido */
 }
 
 /* Títulos H2 Gerais */
@@ -168,7 +162,6 @@ main.admin-container > section h2 {
     margin-bottom: 0;
     padding-top: 20px;
     padding-bottom: 10px;
-    /* Redundância removida: margin-top: 0; já está no h2 geral. */
 }
 
 /* Cartões de Resumo */
@@ -247,8 +240,6 @@ form {
     gap: 15px;
 }
 
-/* Estilo do Título (H2) em formulários de Login/Cadastro */
-/* Substitui o seletor problemático 'form p:first-child' */
 body:not(.admin-container) form h2 {
     font-size: 24px;
     font-weight: bold;
@@ -256,7 +247,7 @@ body:not(.admin-container) form h2 {
     text-align: center;
     margin-top: 0;
     margin-bottom: 15px;
-    border-bottom: none; /* Remove a borda da regra H2 geral */
+    border-bottom: none;
     padding-bottom: 0;
 }
 
@@ -268,7 +259,8 @@ label {
 input[type="email"],
 input[type="password"],
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+select { /* Adicionado o select */
     padding: 10px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
@@ -276,7 +268,7 @@ input[type="number"] {
     font-size: 16px;
 }
 
-input:focus {
+input:focus, select:focus {
     border-color: var(--primary-color);
     outline: none;
     box-shadow: 0 0 0 0.2rem rgba(74, 62, 48, 0.25);
@@ -294,7 +286,9 @@ input:focus {
     background-color: var(--card-background);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    overflow-x: auto;
+    /* overflow-x: auto é mantido para garantir que a tabela não vaze, 
+       permitindo a rolagem horizontal interna se a tela for pequena */
+    overflow-x: auto; 
     width: 100%;
 }
 
@@ -307,6 +301,13 @@ input:focus {
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
+    white-space: nowrap; /* Títulos de tabela não quebram */
+}
+
+/* Garante que o conteúdo longo dentro da célula quebre, se necessário */
+.table-container td {
+    white-space: normal;
+    word-break: break-word;
 }
 
 .table-container th {
@@ -341,7 +342,8 @@ input:focus {
 }
 
 /* Formulário de Cadastro/Criação no Painel Admin */
-#cadastro {
+#form-cadastro { /* Usando o ID do formulário de produtos.html */
+    /* Substitui a regra genérica #cadastro que estava no arquivo */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
@@ -350,10 +352,12 @@ input:focus {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     margin-bottom: 2rem;
-    /* Linhas 'margin: 0;' e 'padding: 0;' contraditórias removidas */
+    width: 100%; /* Garante que ocupe a largura total da seção */
+    max-width: none; /* Remove o max-width para formulários admin */
+    box-shadow: none; /* Remove box-shadow para diferenciar de formulários de login */
 }
 
-#cadastro input {
+#form-cadastro input, #form-cadastro select {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid var(--border-color);
@@ -361,87 +365,14 @@ input:focus {
     box-sizing: border-box;
 }
 
-#cadastro button {
+#form-cadastro button {
     background-color: var(--primary-color);
     color: var(--text-light);
-    grid-column: span 2;
+    grid-column: 1 / -1; /* Faz o botão ocupar a largura total do grid */
     margin-top: 1rem;
+    padding: 1rem;
 }
 
-#cadastro button:hover {
+#form-cadastro button:hover {
     background-color: #383129;
-}
-
-/* Media Queries para Responsividade */
-@media (max-width: 768px) {
-    header {
-        padding: 15px 20px;
-    }
-
-    .admin-container {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        padding: 1rem 1rem 0;
-        
-        /* Ajuste para mobile */
-        position: relative; 
-        top: 0;
-        height: auto;
-    }
-
-    /* O margin-left deve ser removido em telas pequenas para que a seção ocupe a largura total */
-    main.admin-container > section {
-        margin-left: 0;
-    }
-    
-    .sidebar nav {
-        display: flex;
-        overflow-x: auto;
-        white-space: nowrap;
-        padding-bottom: 10px;
-    }
-
-    .nav-item {
-        flex-shrink: 0;
-        margin-right: 5px;
-        border-left: none;
-        border-bottom: 5px solid transparent;
-        padding: 10px 15px 5px;
-    }
-
-    .nav-item.active {
-        border-left: none;
-        border-bottom-color: var(--primary-color);
-    }
-
-    /* Ajuste de padding para telas menores */
-    section {
-        padding: 1rem;
-    }
-
-    .summary-cards {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .quick-links {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .quick-link {
-        width: 100%;
-    }
-
-    #cadastro {
-        grid-template-columns: 1fr;
-    }
-
-    #cadastro button {
-        grid-column: auto;
-    }
 }
