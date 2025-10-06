@@ -74,7 +74,7 @@ async function fetchRecords() {
     }
 }
 
-function renderTable(records) {
+function renderTable(records) { 
     if (!contentContainer) return;
 
     if (records.length === 0) {
@@ -115,7 +115,8 @@ function renderTable(records) {
                 <td data-label="Descrição:" contenteditable="true">${record.descricao}</td>
                 <td data-label="Categoria:" contenteditable="true">${record.categoria}</td>
                 <td data-label="ID Supermercado:" contenteditable="true">${record.id_supermercado}</td>
-                <td data-label="Imagem:">${urlReduzida}</td> <td>
+                <td data-label="Imagem:" contenteditable="true">${urlReduzida}</td> 
+                <td>
                     <button onclick="alterar(${record.id}, this)">Alterar</button>
                     <button onclick="excluir(${record.id})">Excluir</button>
                 </td>
