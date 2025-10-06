@@ -1,111 +1,85 @@
-const BASE_URL = 'https://tcc-senai-tawny.vercel.app';
-const endpoint = '/avaliacoes';
-const contentContainer = document.getElementById('avaliacoes-content');
-
-// O formulário de cadastro de avaliações é geralmente feito pelo cliente e foi omitido aqui.
-
-const getToken = () => localStorage.getItem('authToken');
-const getHeaders = () => ({
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${getToken()}`
-});
-
 document.addEventListener('DOMContentLoaded', () => {
-    if (!getToken()) {
-        window.location.href = 'login.html';
-    } else {
-        fetchRecords();
-    }
-});
+    const token = localStorage.getItem('authToken');
+    const user = JSON.parse(localStorage.getItem('user'));
+    // URL CORRIGIDA
+    const API_URL = 'https://tcc-senai-tawny.vercel.app'; 
 
-document.getElementById('logout-btn')?.addEventListener('click', () => {
-    localStorage.removeItem('authToken');
-    window.location.href = 'login.html';
-});
-
-async function fetchRecords() {
-    try {
-        const response = await fetch(BASE_URL + endpoint, {
-            method: 'GET',
-            headers: getHeaders()
-        });
-
-        if (response.ok) {
-            const records = await response.json();
-            renderTable(records);
-        } else if (response.status === 401) {
-            alert('Sessão expirada. Faça login novamente.');
-            window.location.href = 'login.html';
-        } else {
-            contentContainer.innerHTML = '<p>Erro ao carregar avaliações.</p>';
-        }
-    } catch (error) {
-        contentContainer.innerHTML = '<p>Erro de rede ao carregar avaliações.</p>';
-    }
-}
-
-function renderTable(records) {
-    if (!contentContainer) return;
-    
-    if (records.length === 0) {
-        contentContainer.innerHTML = '<p>Nenhuma avaliação encontrada.</p>';
+    if (!token || !user || user.role !== 'ADMIN') {
+        alert('Acesso negado. Faça login como administrador.');
+        window.location.href = '../pages/login.html';
         return;
     }
 
-    let tableHTML = `
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>ID Usuário</th>
-                    <th>ID Produto</th>
-                    <th>Nota</th>
-                    <th>Comentário</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
+    const currentPage = 'avaliacoes';
+    document.querySelector(`.nav-item[data-page=${currentPage}]`)?.classList.add('active');
 
-    records.forEach(record => {
-        tableHTML += `
-            <tr data-id="${record.id}">
-                <td data-label="ID:">${record.id}</td>
-                <td data-label="ID Usuário:">${record.id_usuario}</td>
-                <td data-label="ID Produto:">${record.id_produto}</td>
-                <td data-label="Nota:" contenteditable="true">${record.nota}</td>
-                <td data-label="Comentário:" contenteditable="true">${record.comentario}</td>
-                <td>
-                    <button onclick="excluir(${record.id})">Excluir</button>
-                </td>
-            </tr>
-        `;
-    });
-
-    tableHTML += `
-            </tbody>
-        </table>
-    `;
-    contentContainer.innerHTML = tableHTML;
-}
-
-window.excluir = async (id) => {
-    if (!confirm(`Tem certeza que deseja excluir a avaliação ID: ${id}?`)) return;
-
-    try {
-        const response = await fetch(`${BASE_URL}${endpoint}/${id}`, {
-            method: 'DELETE',
-            headers: getHeaders()
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = '../pages/login.html';
         });
-
-        if (response.status === 204) {
-            alert('Avaliação excluída com sucesso!');
-            window.location.reload();
-        } else {
-            const errorData = await response.json();
-            alert(`Erro ao excluir avaliação: ${errorData.message || response.statusText}`);
-        }
-    } catch (error) {
-        alert('Erro de rede ao excluir avaliação.');
     }
-}
+
+    const fetchData = async (endpoint, options = {}) => {
+        try {
+            const response = await fetch(`${API_URL}/${endpoint}`, {
+                ...options,
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    ...options.headers 
+                }
+            });
+
+            if (response.status === 401 || response.status === 403) {
+                alert('Sessão expirada ou acesso negado. Faça login novamente.');
+                localStorage.clear();
+                window.location.href = '../pages/login.html';
+                return null;
+            }
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Falha ao buscar dados.');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error(`Erro em ${endpoint}:`, error);
+            alert(`Erro: ${error.message}`);
+            return null;
+        }
+    };
+
+    const renderAvaliacoes = async () => {
+        const tabelaBody = document.getElementById('avaliacoes-lista');
+        if (!tabelaBody) return;
+
+        tabelaBody.innerHTML = '<tr><td colspan="6">Carregando avaliações...</td></tr>';
+        const avaliacoes = await fetchData('avaliacoes');
+        
+        if (avaliacoes && avaliacoes.length > 0) {
+            tabelaBody.innerHTML = avaliacoes.map(a => {
+                // Assume que as relações 'usuario' e 'produto' são carregadas pelo backend
+                const dataFormatada = new Date(a.createdAt).toLocaleDateString('pt-BR');
+                const nomeCliente = a.usuario?.nome || 'N/A';
+                const nomeProduto = a.produto?.nome || 'N/A';
+
+                return `
+                <tr>
+                    <td data-label="ID:">${a.id}</td>
+                    <td data-label="Cliente:">${nomeCliente}</td>
+                    <td data-label="Produto:">${nomeProduto}</td>
+                    <td data-label="Nota:">${a.nota}</td>
+                    <td data-label="Comentário:">${a.comentario}</td>
+                    <td data-label="Data:">${dataFormatada}</td>
+                </tr>
+                `;
+            }).join('');
+        } else {
+            tabelaBody.innerHTML = '<tr><td colspan="6">Nenhuma avaliação encontrada.</td></tr>';
+        }
+    };
+
+    renderAvaliacoes();
+});
