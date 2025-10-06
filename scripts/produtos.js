@@ -93,6 +93,7 @@ function renderTable(records) {
                     <th>Descrição</th>
                     <th>Categoria</th>
                     <th>ID Supermercado</th>
+                    <th>Img</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -109,6 +110,7 @@ function renderTable(records) {
                 <td data-label="Descrição:" contenteditable="true">${record.descricao}</td>
                 <td data-label="Categoria:" contenteditable="true">${record.categoria}</td>
                 <td data-label="ID Supermercado:" contenteditable="true">${record.id_supermercado}</td>
+                <td data-label="Img:" contenteditable="true">${record.img}</td>
                 <td>
                     <button onclick="alterar(${record.id}, this)">Alterar</button>
                     <button onclick="excluir(${record.id})">Excluir</button>
@@ -133,6 +135,7 @@ window.alterar = async (id, button) => {
         descricao: row.cells[4].textContent,
         categoria: row.cells[5].textContent,
         id_supermercado: parseInt(row.cells[6].textContent),
+        img: parseInt(row.cells[7].textContent),
     };
 
     try {
