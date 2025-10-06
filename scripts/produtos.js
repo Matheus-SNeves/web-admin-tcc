@@ -76,7 +76,7 @@ async function fetchRecords() {
 
 function renderTable(records) {
     if (!contentContainer) return;
-    
+
     if (records.length === 0) {
         contentContainer.innerHTML = '<p>Nenhum produto cadastrado.</p>';
         return;
@@ -101,6 +101,11 @@ function renderTable(records) {
     `;
 
     records.forEach(record => {
+        const urlCompleta = record.img || '';
+        const urlReduzida = urlCompleta.length > 10
+            ? urlCompleta.substring(0, 10) + '...'
+            : urlCompleta;
+
         tableHTML += `
             <tr data-id="${record.id}">
                 <td data-label="ID:">${record.id}</td>
@@ -110,8 +115,7 @@ function renderTable(records) {
                 <td data-label="Descrição:" contenteditable="true">${record.descricao}</td>
                 <td data-label="Categoria:" contenteditable="true">${record.categoria}</td>
                 <td data-label="ID Supermercado:" contenteditable="true">${record.id_supermercado}</td>
-                <td data-label="Img:" contenteditable="true">${record.img}</td>
-                <td>
+                <td data-label="Imagem:">${urlReduzida}</td> <td>
                     <button onclick="alterar(${record.id}, this)">Alterar</button>
                     <button onclick="excluir(${record.id})">Excluir</button>
                 </td>
@@ -135,7 +139,7 @@ window.alterar = async (id, button) => {
         descricao: row.cells[4].textContent,
         categoria: row.cells[5].textContent,
         id_supermercado: parseInt(row.cells[6].textContent),
-        img: parseInt(row.cells[7].textContent),
+        img: row.cells[7].textContent,
     };
 
     try {
@@ -147,7 +151,7 @@ window.alterar = async (id, button) => {
 
         if (response.status === 202) {
             alert('Produto alterado com sucesso');
-            // Opcional: window.location.reload();
+            window.location.reload();
         } else {
             const errorData = await response.json();
             alert(`Erro ao alterar produto: ${errorData.message}`);
