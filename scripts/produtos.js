@@ -110,7 +110,7 @@ function renderTable(records) {
                 <td data-label="Descrição:" contenteditable="true">${record.descricao}</td>
                 <td data-label="Categoria:" contenteditable="true">${record.categoria}</td>
                 <td data-label="ID Supermercado:" contenteditable="true">${record.id_supermercado}</td>
-                <td data-label="Img:" contenteditable="true">${record.preco}</td>
+                <td data-label="Img:" contenteditable="true">${record.img}</td>
                 <td>
                     <button onclick="alterar(${record.id}, this)">Alterar</button>
                     <button onclick="excluir(${record.id})">Excluir</button>
