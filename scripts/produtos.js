@@ -101,10 +101,6 @@ function renderTable(records) {
     `;
 
     records.forEach(record => {
-        const urlCompleta = record.img || '';
-        const urlReduzida = urlCompleta.length > 10
-            ? urlCompleta.substring(0, 10) + '...'
-            : urlCompleta;
 
         tableHTML += `
             <tr data-id="${record.id}">
@@ -115,7 +111,7 @@ function renderTable(records) {
                 <td data-label="Descrição:" contenteditable="true">${record.descricao}</td>
                 <td data-label="Categoria:" contenteditable="true">${record.categoria}</td>
                 <td data-label="ID Supermercado:" contenteditable="true">${record.id_supermercado}</td>
-                <td data-label="Imagem:" contenteditable="true">${urlReduzida}</td> 
+                <td data-label="Imagem:" contenteditable="true">${record.img}</td> 
                 <td>
                     <button onclick="alterar(${record.id}, this)">Alterar</button>
                     <button onclick="excluir(${record.id})">Excluir</button>
